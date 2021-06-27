@@ -23,12 +23,16 @@ class HomePage extends Component {
   updateSearch = (search) => {
     this.setState({ search });
     let foundItems = [];
-    this.data.inventory.rooms.forEach((item) => {
-      if (item.includes(search)) {
-        foundItems.push(item);
-      }
-    });
-    this.setState({ foundItems });
+    if (search != "") {
+      this.data.inventory.rooms.forEach((item) => {
+        if (item.includes(search)) {
+          foundItems.push(item);
+        }
+      });
+      this.setState({ foundItems });
+    } else {
+      this.setState({ foundItems: [] });
+    }
   };
 
   render() {
@@ -46,7 +50,7 @@ class HomePage extends Component {
               backgroundColor: "white",
             }}
           />
-          <View style={{ height: 100 }}>
+          <View>
             {this.state.foundItems.map((item, index) => {
               return (
                 <ListItem key={index} bottomDivider>
@@ -56,14 +60,16 @@ class HomePage extends Component {
             })}
           </View>
         </View>
-        <Button
-          style={{
-            marginTop: 50,
-            width: 50,
-            alignSelf: "center",
-          }}
-          icon={<Icon name="plus" size={15} color="white" />}
-        />
+        {!this.state.search && (
+          <Button
+            style={{
+              marginTop: 50,
+              width: 50,
+              alignSelf: "center",
+            }}
+            icon={<Icon name="plus" size={15} color="white" />}
+          />
+        )}
       </View>
     );
   }
@@ -75,9 +81,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   container: {
+    top: 200,
     width: "100%",
     padding: 10,
-    justifyContent: "center",
+    // justifyContent: "center",
   },
 });
 
