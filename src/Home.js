@@ -11,12 +11,18 @@ class HomePage extends Component {
 
   data = {
     inventory: {
-      categories: [
-        { beauty: { products: ["lipstick", "eyeliner", "mascara"] } },
-        { kitchenwear: [] },
-        { art: [] },
+      items: [
+        { name: "lipstick" },
+        { name: "lipgloss" },
+        { name: "eyeliner" },
+        { name: "mascara" },
+        { name: "watercolour palette" },
+        { name: "brush pen" },
+        { name: "that pink dress" },
+        { name: "screwdriver" },
+        { name: "hammer" },
+        { name: "yellow acrylic" },
       ],
-      rooms: ["Kitchen", "bedroom", "bathrom", "Other Kitchen"],
     },
   };
 
@@ -24,8 +30,8 @@ class HomePage extends Component {
     this.setState({ search });
     let foundItems = [];
     if (search != "") {
-      this.data.inventory.rooms.forEach((item) => {
-        if (item.includes(search)) {
+      this.data.inventory.items.forEach((item) => {
+        if (item.name.includes(search.toLowerCase())) {
           foundItems.push(item);
         }
       });
@@ -54,7 +60,7 @@ class HomePage extends Component {
             {this.state.foundItems.map((item, index) => {
               return (
                 <ListItem key={index} bottomDivider>
-                  <Text>{item}</Text>
+                  <Text>{item.name}</Text>
                 </ListItem>
               );
             })}
