@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { Platform, StyleSheet, Text, View, TextInput } from "react-native";
 import { Button, SearchBar, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -48,10 +48,10 @@ class HomePage extends Component {
       <View style={styles.container}>
         <View style={styles.inputArea}>
           <SearchBar
+            platform={Platform.OS}
             placeholder="Type Here..."
             onChangeText={this.updateSearch}
             value={search}
-            lightTheme
             inputContainerStyle={{
               backgroundColor: "white",
             }}
@@ -83,12 +83,13 @@ class HomePage extends Component {
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
-    borderWidth: 1,
+    // height: 40,
+    // borderWidth: 1,
   },
   container: {
+    // backgroundColor: "pink",
     top: 200,
-    width: "100%",
+    // width: "100%",
     padding: 10,
     // justifyContent: "center",
   },
