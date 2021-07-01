@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import React, { useState, Component } from "react";
 import { Platform, StyleSheet, Text, View, TextInput } from "react-native";
 import { Button, SearchBar, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-class HomePage extends Component {
-  state = {
-    search: "",
-    foundItems: [],
-  };
+const HomePage = ({ navigation }) => {
+  const [search, setSearch] = useState("");
+  const [foundItems, setFoundItems] = useState([]);
 
-  data = {
+  let data = {
     inventory: {
       items: [
         { name: "lipstick" },
@@ -26,60 +24,60 @@ class HomePage extends Component {
     },
   };
 
-  updateSearch = (search) => {
-    this.setState({ search });
+  const updateSearch = (e) => {
+    setSearch(e);
     let foundItems = [];
-    if (search != "") {
-      this.data.inventory.items.forEach((item) => {
-        if (item.name.includes(search.toLowerCase())) {
+    if (e != "") {
+      data.inventory.items.forEach((item) => {
+        if (item.name.includes(e.toLowerCase())) {
           foundItems.push(item);
         }
       });
-      this.setState({ foundItems });
+      setFoundItems(foundItems);
     } else {
-      this.setState({ foundItems: [] });
+      setFoundItems([]);
     }
   };
 
-  render() {
-    const { search } = this.state;
-    console.log(this.state);
-    return (
-      <View style={styles.container}>
-        <View style={styles.inputArea}>
-          <SearchBar
-            platform={Platform.OS}
-            placeholder="Type Here..."
-            onChangeText={this.updateSearch}
-            value={search}
-            inputContainerStyle={{
-              backgroundColor: "white",
-            }}
-          />
-          <View>
-            {this.state.foundItems.map((item, index) => {
+  // console.log(this.state);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.inputArea}>
+        <SearchBar
+          platform={Platform.OS}
+          placeholder="Type Here..."
+          onChangeText={updateSearch}
+          value={search}
+          inputContainerStyle={{
+            backgroundColor: "white",
+          }}
+        />
+        <View>
+          {foundItems &&
+            foundItems.map((item, index) => {
               return (
                 <ListItem key={index} bottomDivider>
                   <Text>{item.name}</Text>
                 </ListItem>
               );
             })}
-          </View>
         </View>
-        {!this.state.search && (
-          <Button
-            style={{
-              marginTop: 50,
-              width: 50,
-              alignSelf: "center",
-            }}
-            icon={<Icon name="plus" size={15} color="white" />}
-          />
-        )}
       </View>
-    );
-  }
-}
+      {!search && (
+        <Button
+          style={{
+            marginTop: 50,
+            width: 50,
+            alignSelf: "center",
+          }}
+          icon={<Icon name="plus" size={15} color="white" />}
+          onPress={() => navigation.navigate("AddItem", { name: "Jane" })}
+        />
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   input: {

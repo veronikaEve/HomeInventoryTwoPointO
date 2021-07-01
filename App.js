@@ -1,16 +1,27 @@
+import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 import HomePage from "./src/Home";
+import AddItem from "./src/AddItem";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <Text>Open up App.js to start working on yourself!</Text>
-      <StatusBar style="auto" /> */}
-      <HomePage />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+          options={{ title: "Welcome" }}
+        />
+        <Stack.Screen name="AddItem" component={AddItem} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
