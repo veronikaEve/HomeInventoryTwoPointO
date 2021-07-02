@@ -7,8 +7,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-import HomePage from "./src/Home";
-import AddItem from "./src/AddItem";
+import HomePage from "./src/components/Home";
+import AddItem from "./src/components/AddItem";
 
 export default function App() {
   return (
