@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import { Platform, StyleSheet, Text, View, TextInput } from "react-native";
 import { Button, SearchBar, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -39,11 +39,9 @@ const HomePage = ({ navigation }) => {
     }
   };
 
-  // console.log(this.state);
-
   return (
     <View style={styles.container}>
-      <View style={styles.inputArea}>
+      <View>
         <SearchBar
           platform={Platform.OS}
           placeholder="Type Here..."
@@ -80,16 +78,9 @@ const HomePage = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    // height: 40,
-    // borderWidth: 1,
-  },
   container: {
-    // backgroundColor: "pink",
     top: 200,
-    // width: "100%",
     padding: 10,
-    // justifyContent: "center",
   },
 });
 
