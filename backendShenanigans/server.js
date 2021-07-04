@@ -1,3 +1,5 @@
+const { databasePassword } = require("./creds");
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -8,8 +10,7 @@ app.use(cors());
 
 const port = process.env.PORT || 4000;
 
-const url =
-  "mongodb+srv://homeInventory:QfwiSIFDgJeWMUNP@cluster0.wqild.mongodb.net/inventory?retryWrites=true&w=majority";
+const url = `mongodb+srv://homeInventory:${databasePassword}@cluster0.wqild.mongodb.net/inventory?retryWrites=true&w=majority`;
 const client = new MongoClient(url);
 
 const dbName = "inventory";

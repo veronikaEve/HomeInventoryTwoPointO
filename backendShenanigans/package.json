@@ -1,11 +1,12 @@
 {
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "4.17.1",
-    "mongodb": "^3.6.9"
+    "mongodb": "^3.6.9",
+    "nodemon": "2.0.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
