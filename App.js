@@ -9,6 +9,7 @@ const Stack = createStackNavigator();
 
 import HomePage from "./src/components/Home";
 import AddItem from "./src/components/AddItem";
+import AddSelection from "./src/components/AddSelection";
 
 export default function App() {
   return (
@@ -17,18 +18,11 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomePage}
-          options={{ title: "Welcome" }}
+          options={{ title: "Home" }}
         />
-        <Stack.Screen name="AddItem" component={AddItem} />
+        <Stack.Screen name="ITEM" component={AddItem} />
+        <Stack.Screen name="AddSelection" component={AddSelection} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-});

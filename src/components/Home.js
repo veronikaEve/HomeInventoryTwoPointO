@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Platform, StyleSheet, Text, View, TextInput } from "react-native";
 import { Button, SearchBar, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { getFromDatabase } from "../utils";
+
+import { getFromDatabase } from "../utils/backendConnections";
 
 const HomePage = ({ navigation }) => {
   const [search, setSearch] = useState("");
@@ -51,7 +52,7 @@ const HomePage = ({ navigation }) => {
             alignSelf: "center",
           }}
           icon={<Icon name="plus" size={15} color="white" />}
-          onPress={() => navigation.navigate("AddItem", { name: "Jane" })}
+          onPress={() => navigation.navigate("AddSelection")}
         />
       )}
     </View>
