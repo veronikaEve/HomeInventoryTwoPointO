@@ -16,8 +16,11 @@ const AddItem = ({ navigation, route }) => {
   const [itemDetails, setItemDetails] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleButtonPress = async () => {
-    postToDatabase(itemDetails, "addItem").then(setModalVisible(true));
+  const handleSubmit = async () => {
+    const promise = await postToDatabase(itemDetails, "addItem");
+    if (promise.statusCode == 200) {
+      setModalVisible(true);
+    }
   };
 
   return (
@@ -37,7 +40,7 @@ const AddItem = ({ navigation, route }) => {
       <Button
         style={styles.saveButton}
         icon={<Icon name="check" size={50} color="white" />}
-        onPress={() => handleButtonPress()}
+        onPress={() => handleSubmit()}
       />
       <View style={styles.centeredView}>
         <Modal

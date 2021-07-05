@@ -34,7 +34,6 @@ async function getDB() {
 
 app.post("/addItem", async (req, res) => {
   const database = await getDB();
-  console.log(req.body);
   await database.collection("items").insertOne(req.body);
 
   res.send({ statusCode: 200 });

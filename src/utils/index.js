@@ -1,8 +1,7 @@
 export const postToDatabase = async (data, collection) => {
-  console.log(data, collection);
   const body = JSON.stringify(data);
 
-  fetch(`http://192.168.0.101:4000/${collection}`, {
+  return fetch(`http://192.168.1.52:4000/${collection}`, {
     method: "POST",
     body,
     headers: {
@@ -10,12 +9,5 @@ export const postToDatabase = async (data, collection) => {
     },
   })
     .then((response) => response.json())
-    .then((result) => {
-      if (result.statusCode === 200) {
-        console.log("happy :)");
-      } else {
-        console.log("bad :(");
-      }
-    })
     .catch((err) => console.log("we went wrong", err));
 };
