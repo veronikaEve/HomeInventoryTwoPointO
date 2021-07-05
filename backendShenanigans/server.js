@@ -39,4 +39,27 @@ app.post("/addItem", async (req, res) => {
   res.send({ statusCode: 200 });
 });
 
+app.get("/searchItems", async (req, res) => {
+  const database = await getDB();
+
+  let result = await database
+    .collection("items")
+    .aggregate([
+      {
+        $search: {
+          text: {
+            query: `${req.query.searchTerm}`,
+            path: "name",
+            fuzzy: {
+              maxEdits: 2,
+            },
+          },
+        },
+      },
+    ])
+    .toArray();
+
+  res.send(result);
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

@@ -2,38 +2,19 @@ import React, { useState } from "react";
 import { Platform, StyleSheet, Text, View, TextInput } from "react-native";
 import { Button, SearchBar, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { getFromDatabase } from "../utils";
 
 const HomePage = ({ navigation }) => {
   const [search, setSearch] = useState("");
   const [foundItems, setFoundItems] = useState([]);
 
-  let data = {
-    inventory: {
-      items: [
-        { name: "lipstick" },
-        { name: "lipgloss" },
-        { name: "eyeliner" },
-        { name: "mascara" },
-        { name: "watercolour palette" },
-        { name: "brush pen" },
-        { name: "that pink dress" },
-        { name: "screwdriver" },
-        { name: "hammer" },
-        { name: "yellow acrylic" },
-      ],
-    },
-  };
+  const updateSearch = (searchTerm) => {
+    setSearch(searchTerm);
 
-  const updateSearch = (e) => {
-    setSearch(e);
-    let foundItems = [];
-    if (e != "") {
-      data.inventory.items.forEach((item) => {
-        if (item.name.includes(e.toLowerCase())) {
-          foundItems.push(item);
-        }
-      });
-      setFoundItems(foundItems);
+    if (searchTerm != "") {
+      getFromDatabase("searchItems", searchTerm).then((result) =>
+        setFoundItems(result)
+      );
     } else {
       setFoundItems([]);
     }
