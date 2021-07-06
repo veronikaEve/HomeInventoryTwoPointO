@@ -1,19 +1,12 @@
-import React, { useState, Component } from "react";
-import {
-  Platform,
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-} from "react-native";
+import React, { useState } from "react";
+import { Platform, Modal, StyleSheet, Text, View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import { postToDatabase } from "../utils/backendConnections";
 import { modalStyles } from "../styles";
 
-const AddItem = ({ navigation, route }) => {
+const AddItem = ({ navigation }) => {
   const [itemDetails, setItemDetails] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
 

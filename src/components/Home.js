@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Platform, StyleSheet, Text, View, TextInput } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { Button, SearchBar, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 

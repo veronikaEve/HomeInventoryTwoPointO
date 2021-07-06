@@ -1,6 +1,4 @@
-import React, { useState, Component } from "react";
-import { render } from "react-dom";
-import { Pressable } from "react-native";
+import React from "react";
 import { Text, View } from "react-native";
 import { ListItem } from "react-native-elements";
 
