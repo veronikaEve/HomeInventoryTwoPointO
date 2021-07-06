@@ -17,7 +17,6 @@ const AddSelection = ({ navigation }) => {
             <ListItem.Content>
               <ListItem.Title>{informationTypes[key]}</ListItem.Title>
             </ListItem.Content>
-            {/* <Text>{informationTypes[key]}</Text> */}
             <ListItem.Chevron />
           </ListItem>
         );

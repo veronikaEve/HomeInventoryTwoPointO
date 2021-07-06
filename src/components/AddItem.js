@@ -18,13 +18,16 @@ const AddItem = ({ navigation }) => {
     }
   };
 
+  const itemImage = (image) => {
+    setItemDetails({ ...itemDetails, image });
+  };
+
   return (
     <View style={styles.addItemContainer}>
       <View style={styles.details}>
-        <ImageComponent />
+        <ImageComponent getImage={itemImage} />
         <View
           style={{
-            // flexDirection: "column",
             flexGrow: 1,
           }}
         >
@@ -80,21 +83,17 @@ const AddItem = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   ...modalStyles,
-  addItemContainer: {
-    // display: "flex",
-    // position: "absolute",
-    width: "100%",
-    height: "100%",
-  },
+  addItemContainer: {},
   modalText: {
     marginBottom: 15,
   },
   details: {
     marginTop: 10,
-    // backgroundColor: "pink",
-    // display: "flex",
     flexDirection: "row",
-    // justifyContent: "space-between",
+  },
+  saveButton: {
+    padding: 10,
+    alignItems: "flex-end",
   },
 });
 
