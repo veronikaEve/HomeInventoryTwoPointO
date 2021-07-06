@@ -4,7 +4,8 @@ import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import { postToDatabase } from "../utils/backendConnections";
-import { modalStyles } from "../styles";
+import { modalStyles } from "../styles/modalStyles";
+import ImageComponent from "./ImageComponent";
 
 const AddItem = ({ navigation }) => {
   const [itemDetails, setItemDetails] = useState({});
@@ -19,18 +20,29 @@ const AddItem = ({ navigation }) => {
 
   return (
     <View style={styles.addItemContainer}>
-      <Input
-        placeholder="Item name"
-        onChangeText={(value) =>
-          setItemDetails({ ...itemDetails, name: value })
-        }
-      />
-      <Input
-        placeholder="Item colour"
-        onChangeText={(value) =>
-          setItemDetails({ ...itemDetails, colour: value })
-        }
-      />
+      <View style={styles.details}>
+        <ImageComponent />
+        <View
+          style={{
+            // flexDirection: "column",
+            flexGrow: 1,
+          }}
+        >
+          <Input
+            placeholder="Item name"
+            onChangeText={(value) =>
+              setItemDetails({ ...itemDetails, name: value })
+            }
+          />
+          <Input
+            multiline
+            placeholder="Notes"
+            onChangeText={(value) =>
+              setItemDetails({ ...itemDetails, notes: value })
+            }
+          />
+        </View>
+      </View>
       <Button
         style={styles.saveButton}
         icon={<Icon name="check" size={50} color="white" />}
@@ -68,12 +80,21 @@ const AddItem = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   ...modalStyles,
-  saveButton: {
-    padding: 10,
-    alignSelf: "flex-end",
+  addItemContainer: {
+    // display: "flex",
+    // position: "absolute",
+    width: "100%",
+    height: "100%",
   },
   modalText: {
     marginBottom: 15,
+  },
+  details: {
+    marginTop: 10,
+    // backgroundColor: "pink",
+    // display: "flex",
+    flexDirection: "row",
+    // justifyContent: "space-between",
   },
 });
 

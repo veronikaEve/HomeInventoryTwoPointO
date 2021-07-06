@@ -6,7 +6,7 @@ import { informationTypes } from "../constants/informationTypes";
 
 const AddSelection = ({ navigation }) => {
   return (
-    <View>
+    <View style={{ paddingTop: 20 }}>
       {Object.keys(informationTypes).map((key) => {
         return (
           <ListItem
@@ -14,7 +14,11 @@ const AddSelection = ({ navigation }) => {
             onPress={() => navigation.navigate(key)}
             bottomDivider
           >
-            <Text>{informationTypes[key]}</Text>
+            <ListItem.Content>
+              <ListItem.Title>{informationTypes[key]}</ListItem.Title>
+            </ListItem.Content>
+            {/* <Text>{informationTypes[key]}</Text> */}
+            <ListItem.Chevron />
           </ListItem>
         );
       })}

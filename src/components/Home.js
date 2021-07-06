@@ -29,6 +29,9 @@ const HomePage = ({ navigation }) => {
           placeholder="Type Here..."
           onChangeText={updateSearch}
           value={search}
+          containerStyle={{
+            backgroundColor: "transparent",
+          }}
           inputContainerStyle={{
             backgroundColor: "white",
           }}
