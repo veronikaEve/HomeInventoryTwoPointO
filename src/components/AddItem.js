@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Platform, Modal, StyleSheet, Text, View } from "react-native";
+import React, { useState, useLayoutEffect } from "react";
+import { Platform, StyleSheet, Text, View, Alert } from "react-native";
 import { Button, Input } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 import { postToDatabase } from "../utils/backendConnections";
 import { modalStyles } from "../styles/modalStyles";
@@ -9,12 +8,38 @@ import ImageComponent from "./ImageComponent";
 
 const AddItem = ({ navigation }) => {
   const [itemDetails, setItemDetails] = useState({});
-  const [modalVisible, setModalVisible] = useState(false);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          style={styles.save}
+          onPress={() => handleSubmit()}
+          title="Save"
+        />
+      ),
+    });
+  });
 
   const handleSubmit = async () => {
     const promise = await postToDatabase(itemDetails, "addItem");
+
     if (promise.statusCode == 200) {
-      setModalVisible(true);
+      Alert.alert("Confirm adding this item", "", [
+        {
+          text: "Cancel",
+        },
+        {
+          text: "OK",
+          onPress: () =>
+            Alert.alert("✨ Item addedd successfully ✨", "", [
+              {
+                text: "OK",
+                onPress: () => navigation.navigate("Home"),
+              },
+            ]),
+        },
+      ]);
     }
   };
 
@@ -46,37 +71,6 @@ const AddItem = ({ navigation }) => {
           />
         </View>
       </View>
-      <Button
-        style={styles.saveButton}
-        icon={<Icon name="check" size={50} color="white" />}
-        onPress={() => handleSubmit()}
-      />
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>
-                You've added an item successfully!
-              </Text>
-              <Button
-                style={styles.button}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                  navigation.navigate("Home");
-                }}
-                title="OK"
-              ></Button>
-            </View>
-          </View>
-        </Modal>
-      </View>
     </View>
   );
 };
@@ -91,9 +85,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: "row",
   },
-  saveButton: {
-    padding: 10,
-    alignItems: "flex-end",
+  save: {
+    marginRight: 10,
   },
 });
 
