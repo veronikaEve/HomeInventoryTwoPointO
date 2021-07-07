@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
 import { Button, SearchBar, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -36,16 +36,19 @@ const HomePage = ({ navigation }) => {
             backgroundColor: "white",
           }}
         />
-        <View>
-          {foundItems &&
-            foundItems.map((item, index) => {
-              return (
+        <FlatList
+          data={foundItems}
+          renderItem={(item, index) => {
+            return (
+              foundItems && (
                 <ListItem key={index} bottomDivider>
-                  <Text>{item.name}</Text>
+                  <Text>{item.item.name}</Text>
                 </ListItem>
-              );
-            })}
-        </View>
+              )
+            );
+          }}
+          keyExtractor={(item) => item.id}
+        />
       </View>
       {!search && (
         <Button
