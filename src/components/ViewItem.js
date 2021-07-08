@@ -7,52 +7,57 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { Button } from "react-native-elements";
 
-import { getFromDatabase } from "../utils/backendConnections";
-import { modalStyles } from "../styles/modalStyles";
 import ImageComponent from "./ImageComponent";
-import { HeaderTitle } from "@react-navigation/stack";
+import { postToDatabase } from "../utils/backendConnections";
 
 const ViewItem = ({ navigation, route }) => {
   const item = route.params.item;
-  const [inEditmode, setInEditMode] = useState(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const [itemDetails, setItemDetails] = useState(item || {});
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: item.name,
-      headerRight: () => (
-        <Button
-          style={styles.save}
-          onPress={() => setInEditMode(true)}
-          title="Edit"
-        />
-      ),
+      headerRight: () =>
+        inEditMode ? (
+          <Button
+            style={styles.headerRight}
+            onPress={() => handleSubmit()}
+            title="Save"
+          />
+        ) : (
+          <Button
+            style={styles.headerRight}
+            onPress={() => setInEditMode(true)}
+            title="Edit"
+          />
+        ),
     });
   });
 
-  //   const handleSubmit = async () => {
-  //     const promise = await postToDatabase(itemDetails, "addItem");
-
-  //     if (promise.statusCode == 200) {
-  //       Alert.alert("Confirm adding this item", "", [
-  //         {
-  //           text: "Cancel",
-  //         },
-  //         {
-  //           text: "OK",
-  //           onPress: () =>
-  //             Alert.alert("✨ Item addedd successfully ✨", "", [
-  //               {
-  //                 text: "OK",
-  //                 onPress: () => navigation.navigate("Home"),
-  //               },
-  //             ]),
-  //         },
-  //       ]);
-  //     }
-  //   };
+  const handleSubmit = async () => {
+    Alert.alert("Confirm update", "", [
+      {
+        text: "Cancel",
+      },
+      {
+        text: "OK",
+        onPress: async () => {
+          const promise = await postToDatabase(itemDetails, "updateItem");
+          if (promise.statusCode == 200) {
+            Alert.alert("✨ Item updated successfully ✨", "", [
+              {
+                text: "OK",
+                onPress: () => setInEditMode(false),
+              },
+            ]);
+          }
+        },
+      },
+    ]);
+  };
 
   const itemImage = (image) => {
     setItemDetails({ ...itemDetails, image });
@@ -61,13 +66,17 @@ const ViewItem = ({ navigation, route }) => {
   return (
     <View style={styles.addItemContainer}>
       <View style={styles.details}>
-        <ImageComponent getImage={itemImage} item={item} />
+        <ImageComponent
+          getImage={itemImage}
+          item={item}
+          inEditMode={inEditMode}
+        />
         <View
           style={{
             flexGrow: 1,
           }}
         >
-          {inEditmode ? (
+          {inEditMode ? (
             <View>
               <TextInput
                 style={styles.text}
@@ -88,8 +97,8 @@ const ViewItem = ({ navigation, route }) => {
             </View>
           ) : (
             <View>
-              <Text style={styles.text}>{item.name}</Text>
-              <Text style={styles.text}>{item.notes}</Text>
+              <Text style={styles.text}>{itemDetails.name}</Text>
+              <Text style={styles.text}>{itemDetails.notes}</Text>
             </View>
           )}
         </View>
@@ -99,7 +108,6 @@ const ViewItem = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  ...modalStyles,
   addItemContainer: {},
   modalText: {
     marginBottom: 15,
@@ -111,12 +119,11 @@ const styles = StyleSheet.create({
   text: {
     borderBottomWidth: 1,
     borderBottomColor: "grey",
-    // backgroundColor: "pink",
     margin: 10,
     padding: 5,
     fontSize: 20,
   },
-  save: {
+  headerRight: {
     marginRight: 10,
   },
 });

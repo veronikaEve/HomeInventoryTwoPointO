@@ -1,9 +1,9 @@
 // const homeURL='http://192.168.0.101:4000'
 // const tomURL = 'http://192.168.1.52:4000'
 
-export const postToDatabase = async (data, collection) => {
+export const postToDatabase = async (data, action) => {
   const body = JSON.stringify(data);
-  return fetch(`http://192.168.0.102:4000/${collection}`, {
+  return fetch(`http://192.168.0.102:4000/${action}`, {
     method: "POST",
     body,
     headers: {

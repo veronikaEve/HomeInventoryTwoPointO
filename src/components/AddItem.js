@@ -1,10 +1,9 @@
 import React, { useState, useLayoutEffect } from "react";
-import { Platform, StyleSheet, Text, View, Alert } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { Platform, StyleSheet, View, Alert, TextInput } from "react-native";
+import { Button } from "react-native-elements";
 
 import ImageComponent from "./ImageComponent";
 import { postToDatabase } from "../utils/backendConnections";
-import { modalStyles } from "../styles/modalStyles";
 
 const AddItem = ({ navigation }) => {
   const [itemDetails, setItemDetails] = useState({});
@@ -22,25 +21,25 @@ const AddItem = ({ navigation }) => {
   });
 
   const handleSubmit = async () => {
-    const promise = await postToDatabase(itemDetails, "addItem");
-
-    if (promise.statusCode == 200) {
-      Alert.alert("Confirm adding this item", "", [
-        {
-          text: "Cancel",
-        },
-        {
-          text: "OK",
-          onPress: () =>
-            Alert.alert("✨ Item addedd successfully ✨", "", [
+    Alert.alert("Confirm adding this item", "", [
+      {
+        text: "Cancel",
+      },
+      {
+        text: "OK",
+        onPress: async () => {
+          const promise = await postToDatabase(itemDetails, "addItem");
+          if (promise.statusCode == 200) {
+            Alert.alert("✨ Item added successfully ✨", "", [
               {
                 text: "OK",
                 onPress: () => navigation.navigate("Home"),
               },
-            ]),
+            ]);
+          }
         },
-      ]);
-    }
+      },
+    ]);
   };
 
   const itemImage = (image) => {
@@ -50,21 +49,24 @@ const AddItem = ({ navigation }) => {
   return (
     <View style={styles.addItemContainer}>
       <View style={styles.details}>
-        <ImageComponent getImage={itemImage} />
+        <ImageComponent getImage={itemImage} inEditMode />
         <View
           style={{
             flexGrow: 1,
           }}
         >
-          <Input
+          <TextInput
+            style={styles.text}
             placeholder="Item name"
+            defaultValue={itemDetails.name}
             onChangeText={(value) =>
               setItemDetails({ ...itemDetails, name: value })
             }
           />
-          <Input
-            multiline
+          <TextInput
+            style={styles.text}
             placeholder="Notes"
+            defaultValue={itemDetails.notes}
             onChangeText={(value) =>
               setItemDetails({ ...itemDetails, notes: value })
             }
@@ -76,7 +78,6 @@ const AddItem = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  ...modalStyles,
   addItemContainer: {},
   modalText: {
     marginBottom: 15,
@@ -84,6 +85,13 @@ const styles = StyleSheet.create({
   details: {
     marginTop: 10,
     flexDirection: "row",
+  },
+  text: {
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
+    margin: 10,
+    padding: 5,
+    fontSize: 20,
   },
   save: {
     marginRight: 10,

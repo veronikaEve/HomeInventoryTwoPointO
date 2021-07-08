@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const MongoClient = require("mongodb").MongoClient;
+var ObjectId = require("mongodb").ObjectId;
 
 app.use(express.json());
 app.use(cors());
@@ -36,6 +37,25 @@ app.post("/addItem", async (req, res) => {
   const database = await getDB();
   await database.collection("items").insertOne(req.body);
 
+  res.send({ statusCode: 200 });
+});
+
+app.post("/updateItem", async (req, res) => {
+  const database = await getDB();
+  console.log(req.body);
+
+  await database
+    .collection("items")
+    .updateOne(
+      { _id: ObjectId(req.body._id) },
+      { $set: { ...req.body, _id: new ObjectId(req.body._id) } },
+      function (err, res) {
+        if (err) {
+          throw err;
+        }
+        console.log("1 document updated");
+      }
+    );
   res.send({ statusCode: 200 });
 });
 

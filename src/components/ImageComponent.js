@@ -5,7 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const ImageComponent = (props) => {
-  const [image, setImage] = useState(props.item.image);
+  const [image, setImage] = useState(props?.item?.image);
 
   useEffect(() => {
     (async () => {
@@ -38,7 +38,7 @@ const ImageComponent = (props) => {
       {image ? (
         <Image style={styles.image} source={{ uri: image }} />
       ) : (
-        <Pressable onPress={uploadImage}>
+        <Pressable onPress={() => props.inEditMode && uploadImage()}>
           <View style={styles.image}>
             <Icon name="camera" size={50} color="white" />
           </View>
