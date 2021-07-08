@@ -11,11 +11,18 @@ const AddItem = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button
-          style={styles.save}
-          onPress={() => handleSubmit()}
-          title="Save"
-        />
+        <View style={{ flexDirection: "row" }}>
+          <Button
+            style={styles.headerRight}
+            onPress={() => navigation.navigate("Home")}
+            title="Cancel"
+          />
+          <Button
+            style={styles.headerRight}
+            onPress={() => handleSubmit()}
+            title="Save"
+          />
+        </View>
       ),
     });
   });
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 20,
   },
-  save: {
+  headerRight: {
     marginRight: 10,
   },
 });

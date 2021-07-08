@@ -22,11 +22,21 @@ const ViewItem = ({ navigation, route }) => {
       headerTitle: item.name,
       headerRight: () =>
         inEditMode ? (
-          <Button
-            style={styles.headerRight}
-            onPress={() => handleSubmit()}
-            title="Save"
-          />
+          <View style={{ flexDirection: "row" }}>
+            <Button
+              style={styles.headerRight}
+              onPress={() => {
+                setInEditMode(false);
+                setItemDetails(item);
+              }}
+              title="Cancel"
+            />
+            <Button
+              style={styles.headerRight}
+              onPress={() => handleSubmit()}
+              title="Save"
+            />
+          </View>
         ) : (
           <Button
             style={styles.headerRight}
