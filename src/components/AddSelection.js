@@ -11,11 +11,11 @@ const AddSelection = ({ navigation }) => {
         return (
           <ListItem
             key={key}
-            onPress={() => navigation.navigate(key)}
+            onPress={() => navigation.navigate(informationTypes[key].add)}
             bottomDivider
           >
             <ListItem.Content>
-              <ListItem.Title>{informationTypes[key]}</ListItem.Title>
+              <ListItem.Title>{informationTypes[key].type}</ListItem.Title>
             </ListItem.Content>
             <ListItem.Chevron />
           </ListItem>

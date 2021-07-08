@@ -4,6 +4,7 @@ import { Button, SearchBar, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import { getFromDatabase } from "../utils/backendConnections";
+import { informationTypes } from "../constants/informationTypes";
 
 const HomePage = ({ navigation }) => {
   const [search, setSearch] = useState("");
@@ -38,11 +39,19 @@ const HomePage = ({ navigation }) => {
         />
         <FlatList
           data={foundItems}
-          renderItem={(item, index) => {
+          renderItem={({ item }, index) => {
             return (
               foundItems && (
-                <ListItem key={index} bottomDivider>
-                  <Text>{item.item.name}</Text>
+                <ListItem
+                  key={index}
+                  onPress={() =>
+                    navigation.navigate(informationTypes.ITEM.view, {
+                      item,
+                    })
+                  }
+                  bottomDivider
+                >
+                  <Text>{item.name}</Text>
                 </ListItem>
               )
             );

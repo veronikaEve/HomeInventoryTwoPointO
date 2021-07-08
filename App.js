@@ -10,6 +10,8 @@ const Stack = createStackNavigator();
 import HomePage from "./src/components/Home";
 import AddItem from "./src/components/AddItem";
 import AddSelection from "./src/components/AddSelection";
+import ViewItem from "./src/components/ViewItem";
+import { informationTypes } from "./src/constants/informationTypes";
 
 export default function App() {
   return (
@@ -20,7 +22,12 @@ export default function App() {
           component={HomePage}
           options={{ title: "Home" }}
         />
-        <Stack.Screen name="ITEM" component={AddItem} />
+        <Stack.Screen
+          name={informationTypes.ITEM.add}
+          component={AddItem}
+          options={{ title: informationTypes.ITEM.addPageTitle }}
+        />
+        <Stack.Screen name={informationTypes.ITEM.view} component={ViewItem} />
         <Stack.Screen name="AddSelection" component={AddSelection} />
       </Stack.Navigator>
     </NavigationContainer>

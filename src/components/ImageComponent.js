@@ -5,7 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const ImageComponent = (props) => {
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(props.item.image);
 
   useEffect(() => {
     (async () => {
@@ -32,6 +32,7 @@ const ImageComponent = (props) => {
       props.getImage(result.uri);
     }
   };
+
   return (
     <View>
       {image ? (

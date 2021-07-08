@@ -2,9 +2,9 @@ import React, { useState, useLayoutEffect } from "react";
 import { Platform, StyleSheet, Text, View, Alert } from "react-native";
 import { Button, Input } from "react-native-elements";
 
+import ImageComponent from "./ImageComponent";
 import { postToDatabase } from "../utils/backendConnections";
 import { modalStyles } from "../styles/modalStyles";
-import ImageComponent from "./ImageComponent";
 
 const AddItem = ({ navigation }) => {
   const [itemDetails, setItemDetails] = useState({});
