@@ -3,7 +3,7 @@
 
 export const postToDatabase = async (data, action) => {
   const body = JSON.stringify(data);
-  return fetch(`http://192.168.0.102:4000/${action}`, {
+  return fetch(`http://192.168.0.101:4000/${action}`, {
     method: "POST",
     body,
     headers: {
@@ -16,7 +16,7 @@ export const postToDatabase = async (data, action) => {
 
 export const getFromDatabase = async (collection, searchTerm) => {
   return fetch(
-    `http://192.168.0.102:4000/${collection}?searchTerm=${searchTerm}`,
+    `http://192.168.0.101:4000/${collection}?searchTerm=${searchTerm}`,
     {
       method: "GET",
       headers: {

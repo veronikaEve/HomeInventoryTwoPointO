@@ -8,9 +8,15 @@ import {
   TextInput,
 } from "react-native";
 import { Button } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import ImageComponent from "./ImageComponent";
 import { postToDatabase } from "../utils/backendConnections";
+
+const actionTypes = {
+  update: { action: "updateItem", name: "update" },
+  delete: { action: "deleteItem", name: "delete" },
+};
 
 const ViewItem = ({ navigation, route }) => {
   const item = route.params.item;
@@ -19,21 +25,21 @@ const ViewItem = ({ navigation, route }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: item.name,
+      headerTitle: "",
       headerRight: () =>
         inEditMode ? (
           <View style={{ flexDirection: "row" }}>
             <Button
               style={styles.headerRight}
+              type="clear"
               onPress={() => {
-                setInEditMode(false);
-                setItemDetails(item);
+                setInEditMode(false), setItemDetails(item);
               }}
               title="Cancel"
             />
             <Button
               style={styles.headerRight}
-              onPress={() => handleSubmit()}
+              onPress={() => handleSubmit(actionTypes.update)}
               title="Save"
             />
           </View>
@@ -47,20 +53,25 @@ const ViewItem = ({ navigation, route }) => {
     });
   });
 
-  const handleSubmit = async () => {
-    Alert.alert("Confirm update", "", [
+  const handleSubmit = async (actionType) => {
+    Alert.alert(`Confirm ${actionType.name}`, "", [
       {
         text: "Cancel",
       },
       {
         text: "OK",
         onPress: async () => {
-          const promise = await postToDatabase(itemDetails, "updateItem");
+          const promise = await postToDatabase(itemDetails, actionType.action);
           if (promise.statusCode == 200) {
-            Alert.alert("✨ Item updated successfully ✨", "", [
+            Alert.alert(`✨ Item ${actionType.name}d successfully ✨`, "", [
               {
                 text: "OK",
-                onPress: () => setInEditMode(false),
+                onPress: () => {
+                  setInEditMode(false);
+                  if ((actionType = actionTypes.delete)) {
+                    navigation.navigate("Home");
+                  }
+                },
               },
             ]);
           }
@@ -113,6 +124,28 @@ const ViewItem = ({ navigation, route }) => {
           )}
         </View>
       </View>
+      {inEditMode && (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button
+            buttonStyle={{ margin: 10, backgroundColor: "crimson" }}
+            onPress={() => handleSubmit(actionTypes.delete)}
+            icon={
+              <Icon
+                name="trash"
+                size={15}
+                color="white"
+                style={{ marginRight: 5 }}
+              />
+            }
+            title="Delete"
+          />
+        </View>
+      )}
     </View>
   );
 };

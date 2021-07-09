@@ -56,7 +56,7 @@ const HomePage = ({ navigation }) => {
               )
             );
           }}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item._id}
         />
       </View>
       {!search && (

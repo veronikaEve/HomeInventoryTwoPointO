@@ -59,6 +59,16 @@ app.post("/updateItem", async (req, res) => {
   res.send({ statusCode: 200 });
 });
 
+app.post("/deleteItem", async (req, res) => {
+  const database = await getDB();
+  console.log(req.body);
+
+  await database
+    .collection("items")
+    .remove({ _id: ObjectId(req.body._id) }, { justOne: true });
+  res.send({ statusCode: 200 });
+});
+
 app.get("/searchItems", async (req, res) => {
   const database = await getDB();
 

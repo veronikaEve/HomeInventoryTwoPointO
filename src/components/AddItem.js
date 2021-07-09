@@ -14,6 +14,7 @@ const AddItem = ({ navigation }) => {
         <View style={{ flexDirection: "row" }}>
           <Button
             style={styles.headerRight}
+            type="clear"
             onPress={() => navigation.navigate("Home")}
             title="Cancel"
           />
