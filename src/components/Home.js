@@ -44,11 +44,12 @@ const HomePage = ({ navigation }) => {
               foundItems && (
                 <ListItem
                   key={index}
-                  onPress={() =>
+                  onPress={() => {
+                    updateSearch("");
                     navigation.navigate(informationTypes.ITEM.view, {
                       item,
-                    })
-                  }
+                    });
+                  }}
                   bottomDivider
                 >
                   <Text>{item.name}</Text>
@@ -67,7 +68,10 @@ const HomePage = ({ navigation }) => {
             alignSelf: "center",
           }}
           icon={<Icon name="plus" size={15} color="white" />}
-          onPress={() => navigation.navigate("AddSelection")}
+          onPress={() => {
+            updateSearch("");
+            navigation.navigate("AddSelection");
+          }}
         />
       )}
     </View>
