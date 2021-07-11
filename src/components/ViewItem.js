@@ -68,7 +68,7 @@ const ViewItem = ({ navigation, route }) => {
                 text: "OK",
                 onPress: () => {
                   setInEditMode(false);
-                  if ((actionType = actionTypes.delete)) {
+                  if (actionType == actionTypes.delete) {
                     navigation.navigate("Home");
                   }
                 },
